@@ -47,6 +47,8 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
+import { BookService } from './services/book.service';
+import { AuthGuardService } from './services/auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -103,7 +105,7 @@ import { HttpClientModule } from '@angular/common/http';
 
   
   ],
-  providers: [AuthService],
+  providers: [AuthService, BookService, AuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

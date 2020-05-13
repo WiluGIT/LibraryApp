@@ -27,7 +27,7 @@
                 </mat-form-field>
                 <mat-form-field appearance="fill">
                     <mat-label>Enter password confirmation</mat-label>
-                    <input type="password" matInput formControlName="confirmPassword">
+                    <input type="password" matInput formControlName="confirmPassword" [errorStateMatcher]="matcher">
                     <mat-error *ngIf="confirmPassword.invalid">Password confirmation is required</mat-error>
                     <mat-error *ngIf="registerForm.hasError('notSame')">Passwords not the same</mat-error>
 

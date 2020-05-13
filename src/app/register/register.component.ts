@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl, FormGroupDirective, NgForm } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
+import { ErrorStateMatcher } from '@angular/material/core';
 
 @Component({
   selector: 'app-register',
@@ -10,6 +11,7 @@ import { AuthService } from '../services/auth.service';
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   constructor(private fb: FormBuilder, private authService:AuthService) { }
+  matcher = new MyErrorStateMatcher();
 
   ngOnInit() {
     this.registerForm = this.fb.group({
@@ -24,9 +26,7 @@ export class RegisterComponent implements OnInit {
         Validators.required
         
       ]],
-      confirmPassword: ['',[
-        Validators.required
-      ]]
+      confirmPassword: [''],
     }, {validators: this.checkPasswords});
   }
 
@@ -56,4 +56,12 @@ export class RegisterComponent implements OnInit {
     return password === confirmPassword ? null : {notSame: true};
   }
 
+}
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const invalidCtrl = !!(control && control.invalid && control.parent.dirty);
+    const invalidParent = !!(control && control.parent && control.parent.invalid && control.parent.dirty);
+
+    return (invalidCtrl || invalidParent);
+  }
 }
