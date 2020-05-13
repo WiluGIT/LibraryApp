@@ -33,7 +33,9 @@ export class LoginComponent implements OnInit {
   login(){
     console.log(this.loginForm.value);
     this.authService.login(this.loginForm.value)
-    .subscribe(data => console.log(data));
+    .subscribe(data => {
+      this.authService.saveToken(data.access_token);
+    });
   }
 
 }

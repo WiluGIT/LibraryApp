@@ -23,12 +23,14 @@
                 <mat-form-field appearance="fill">
                     <mat-label>Enter password</mat-label>
                     <input type="password" matInput formControlName="password">
-                    <mat-error *ngIf="password.invalid">Password is required</mat-error>
+                    <mat-error *ngIf="registerForm.hasError('required','password')">Password is required</mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="fill">
                     <mat-label>Enter password confirmation</mat-label>
                     <input type="password" matInput formControlName="confirmPassword">
                     <mat-error *ngIf="confirmPassword.invalid">Password confirmation is required</mat-error>
+                    <mat-error *ngIf="registerForm.hasError('notSame')">Passwords not the same</mat-error>
+
                 </mat-form-field>
     
     

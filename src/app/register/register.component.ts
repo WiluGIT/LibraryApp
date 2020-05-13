@@ -27,7 +27,7 @@ export class RegisterComponent implements OnInit {
       confirmPassword: ['',[
         Validators.required
       ]]
-    });
+    }, {validators: this.checkPasswords});
   }
 
   get userName() {
@@ -47,6 +47,13 @@ export class RegisterComponent implements OnInit {
     console.log(this.registerForm.value);
     this.authService.register(this.registerForm.value)
     .subscribe(data => console.log(data));
+  }
+
+  checkPasswords(group: FormGroup){
+    let password = group.get('password').value;
+    let confirmPassword = group.get('confirmPassword').value;
+
+    return password === confirmPassword ? null : {notSame: true};
   }
 
 }
