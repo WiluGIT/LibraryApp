@@ -45,6 +45,8 @@ import {MatTreeModule} from '@angular/material/tree';
 import { RegisterComponent } from './register/register.component';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AuthService } from './services/auth.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -59,6 +61,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     MatFormFieldModule,
     MatInputModule,
@@ -97,9 +100,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatToolbarModule,
     MatTooltipModule,
     MatTreeModule,
+
   
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

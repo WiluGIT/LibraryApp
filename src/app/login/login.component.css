@@ -1,0 +1,10 @@
+.mat-form-field {
+    margin: 1em;
+    display: block;
+    position: relative;
+    text-align: center;
+  }
+
+.form-wrapper{
+    justify-content: center !important;
+}
