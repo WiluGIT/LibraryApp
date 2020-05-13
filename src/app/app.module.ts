@@ -46,9 +46,12 @@ import { RegisterComponent } from './register/register.component';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './services/auth.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BookService } from './services/book.service';
 import { AuthGuardService } from './services/auth-guard.service';
+import { TokenInterceptorService } from './services/token-interceptor.service';
+import { UserFormComponent } from './user-form/user-form.component';
+import { UsersPanelComponent } from './users-panel/users-panel.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +59,9 @@ import { AuthGuardService } from './services/auth-guard.service';
     LoginComponent,
     NavMenuComponent,
     HomeComponent,
-    RegisterComponent
+    RegisterComponent,
+    UserFormComponent,
+    UsersPanelComponent
   ],
   imports: [
     BrowserModule,
@@ -102,10 +107,18 @@ import { AuthGuardService } from './services/auth-guard.service';
     MatToolbarModule,
     MatTooltipModule,
     MatTreeModule,
-
   
   ],
-  providers: [AuthService, BookService, AuthGuardService],
+  providers: [AuthService, 
+    BookService, 
+    AuthGuardService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      // option for another interceptors
+      multi: true
+    }
+  ],    
   bootstrap: [AppComponent]
 })
 export class AppModule { }

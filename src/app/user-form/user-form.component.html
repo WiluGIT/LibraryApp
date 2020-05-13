@@ -1,0 +1,46 @@
+<div class="row form-wrapper">
+    <div class="col-lg-6 col-md-8 col-sm-12">
+        <div class="mb-3 card mx-auto">
+            <div class="card-header-tab card-header ">
+                <div class="text-center">
+                    <span class="text-center">Rejestracja</span>
+                </div>
+            </div>
+            <form [formGroup]="registerForm" (ngSubmit)="register()">
+                Value: {{registerForm.value | json}}
+                <hr />
+                <mat-form-field appearance="fill">
+                    <mat-label>Enter username</mat-label>
+                    <input matInput placeholder="UserName23" formControlName="userName">
+                    <mat-error *ngIf="userName.invalid">Username is required</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Enter email</mat-label>
+                    <input matInput placeholder="example@gmail.com" formControlName="email">
+                    <mat-error *ngIf="email.invalid">Email is required</mat-error>
+                    <mat-error *ngIf="email.errors?.email">Not correct form of email</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Enter password</mat-label>
+                    <input type="password" matInput formControlName="password">
+                    <mat-error *ngIf="registerForm.hasError('required','password')">Password is required</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Enter password confirmation</mat-label>
+                    <input type="password" matInput formControlName="confirmPassword" [errorStateMatcher]="matcher">
+                    <mat-error *ngIf="confirmPassword.invalid">Password confirmation is required</mat-error>
+                    <mat-error *ngIf="registerForm.hasError('notSame')">Passwords not the same</mat-error>
+
+                </mat-form-field>
+    
+    
+                <div class="text-center">
+                    <button type="submit" [disabled]="registerForm.invalid"
+                        class="btn btn-outline-primary">Register</button>
+    
+                </div>
+            </form>
+    
+        </div>
+    </div>
+</div>
