@@ -10,10 +10,9 @@
               Value: {{loginForm.value | json}}
               <hr />
               <mat-form-field appearance="fill">
-                  <mat-label>Enter email</mat-label>
-                  <input matInput placeholder="example@gmail.com" formControlName="email">
-                  <mat-error *ngIf="email.invalid">Email is required</mat-error>
-                  <mat-error *ngIf="email.errors?.email">Not correct form of email</mat-error>
+                  <mat-label>Enter Login</mat-label>
+                  <input matInput placeholder="ExampleUsername" formControlName="userName">
+                  <mat-error *ngIf="userName.invalid">Login is required</mat-error>
               </mat-form-field>
               <mat-form-field appearance="fill">
                   <mat-label>Enter password</mat-label>

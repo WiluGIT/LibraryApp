@@ -13,9 +13,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.loginForm = this.fb.group({
-      email: ['',[
-        Validators.required,
-        Validators.email
+      userName: ['',[
+        Validators.required
       ]],
       password: ['',[
         Validators.required
@@ -24,8 +23,8 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  get email() {
-    return this.loginForm.get('email');
+  get userName() {
+    return this.loginForm.get('userName');
   }
   get password() {
     return this.loginForm.get('password');
