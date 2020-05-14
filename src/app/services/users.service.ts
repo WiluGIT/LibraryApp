@@ -9,10 +9,15 @@ import { map } from 'rxjs/operators';
 })
 export class UsersService {
   private usersPath = environment.apiUrl + 'api/User/GetUsers';
+  private deleteUserPath = environment.apiUrl + 'api/User/DeleteUser/';
 
   constructor(private http:HttpClient) { }
 
   getUsers():Observable<IUserViewModel[]>{
     return this.http.get(this.usersPath).pipe(map((users: IUserViewModel[]) => users));
+  }
+
+  deleteUser(id:string){
+    return this.http.delete(this.deleteUserPath + id);
   }
 }
