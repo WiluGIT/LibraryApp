@@ -6,6 +6,7 @@ import { RegisterComponent } from './register/register.component';
 import { AuthGuardService } from './services/auth-guard.service';
 import { UserFormComponent } from './user-form/user-form.component';
 import { UsersPanelComponent } from './users-panel/users-panel.component';
+import { BooksComponent } from './books/books.component';
 
 
 const routes: Routes = [
@@ -14,7 +15,8 @@ const routes: Routes = [
   { path:'register', component: RegisterComponent},
   // TODO create admin guard service
   { path: 'user-form', component: UserFormComponent, canActivate: [AuthGuardService]},
-  { path: 'users', component: UsersPanelComponent, canActivate: [AuthGuardService]}
+  { path: 'users', component: UsersPanelComponent, canActivate: [AuthGuardService]},
+  { path: 'books', component: BooksComponent}
 ];
 
 @NgModule({

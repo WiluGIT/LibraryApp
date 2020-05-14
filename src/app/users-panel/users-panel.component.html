@@ -1,7 +1,13 @@
-<mat-form-field class="example-full-width text-center">
+<div>
+  <a [routerLink]="['/user-form']" class="btn btn-outline-primary">Create user</a>
+</div>
+<div class="searchBar">
+  <mat-form-field class="example-full-width text-center">
     <mat-label>Search by username</mat-label>
     <input (keyup)="applyFilter($event)" matInput placeholder="Ex. User123">
-  </mat-form-field>
+</mat-form-field>
+</div>
+
 <mat-table class="lessons-table mat-elevation-z8" [dataSource]="dataSource">
 
     <ng-container matColumnDef="userId">
@@ -29,7 +35,7 @@
         </td>
       </ng-container>
 
-    <mat-header-row *matHeaderRowDef="displayedColumns" (click)="onRowClicked(row)"></mat-header-row>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 
     <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
 

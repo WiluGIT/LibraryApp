@@ -41,9 +41,6 @@ export class UsersPanelComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.activePageDataChunk);
   }
 
-  onRowClicked(row) {
-    console.log('Row clicked: ', row);
-  }
 
   applyFilter(event: Event) {
     this.dataSource = new MatTableDataSource(this.users);

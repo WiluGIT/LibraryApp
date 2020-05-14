@@ -3,3 +3,12 @@ td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
     border-bottom-width: 1px;
     border-bottom-style: none;
 }
+
+.searchBar{
+    align-content: center !important;
+}
+.mat-form-field {
+    display: block;
+    position: relative;
+    text-align: left;
+}
