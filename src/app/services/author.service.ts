@@ -11,12 +11,17 @@ import { map } from 'rxjs/operators';
 export class AuthorService {
   private authorsPath = environment.apiUrl + 'api/Author/GetAuthors';
   private deleteAuthorPath = environment.apiUrl + 'api/Author/DeleteAuthor/';
+  private createAuthorPath = environment.apiUrl + 'api/Author/AddAuthor';
 
   constructor(private http: HttpClient) { }
 
   getAuthors():Observable<IAuthorViewModel[]>{
     return this.http.get(this.authorsPath).pipe(map((author: IAuthorViewModel[]) => author));
 
+  }
+
+  addAuthor(author:IAuthorViewModel){
+    return this.http.post(this.createAuthorPath, author);
   }
 
   deleteAuthor(authorId){

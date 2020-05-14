@@ -54,6 +54,7 @@ import { UserFormComponent } from './user-form/user-form.component';
 import { UsersPanelComponent } from './users-panel/users-panel.component';
 import { BooksComponent } from './books/books.component';
 import { AuthorsComponent } from './authors/authors.component';
+import { AuthorFormComponent } from './author-form/author-form.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { AuthorsComponent } from './authors/authors.component';
     UserFormComponent,
     UsersPanelComponent,
     BooksComponent,
-    AuthorsComponent
+    AuthorsComponent,
+    AuthorFormComponent
   ],
   imports: [
     BrowserModule,

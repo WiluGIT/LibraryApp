@@ -8,6 +8,7 @@ import { UserFormComponent } from './user-form/user-form.component';
 import { UsersPanelComponent } from './users-panel/users-panel.component';
 import { BooksComponent } from './books/books.component';
 import { AuthorsComponent } from './authors/authors.component';
+import { AuthorFormComponent } from './author-form/author-form.component';
 
 
 const routes: Routes = [
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'user-form', component: UserFormComponent, canActivate: [AuthGuardService]},
   { path: 'users', component: UsersPanelComponent, canActivate: [AuthGuardService]},
   { path: 'authors', component: AuthorsComponent, canActivate: [AuthGuardService]},
+  { path: 'author-form', component: AuthorFormComponent, canActivate: [AuthGuardService]},
   { path: 'books', component: BooksComponent}
 ];
 

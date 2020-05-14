@@ -1,0 +1,35 @@
+<div class="row form-wrapper">
+    <div class="col-lg-6 col-md-8 col-sm-12">
+        <div class="mb-3 card mx-auto">
+            <div class="card-header-tab card-header ">
+                <div>
+                    <a [routerLink]="['/authors']" class="btn btn-outline-secondary" >Back to panel</a>
+                </div>
+                <div class="text-center">
+                    <span class="text-center">Create Author</span>
+                </div>
+            </div>
+            <form [formGroup]="authorForm" (ngSubmit)="addAuthor()">
+                Value: {{authorForm.value | json}}
+                <hr />
+                <mat-form-field appearance="fill">
+                    <mat-label>Enter author name</mat-label>
+                    <input matInput placeholder="Stephen" formControlName="firstName">
+                    <mat-error *ngIf="firstName.invalid">Name is required</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Enter author surname</mat-label>
+                    <input matInput placeholder="King" formControlName="lastName">
+                    <mat-error *ngIf="lastName.invalid">Surname is required</mat-error>
+                </mat-form-field>
+       
+                <div class="text-center">
+                    <button type="submit" [disabled]="authorForm.invalid"
+                        class="btn btn-outline-primary">Create</button>
+    
+                </div>
+            </form>
+    
+        </div>
+    </div>
+</div>
