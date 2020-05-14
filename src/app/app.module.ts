@@ -53,6 +53,7 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
 import { UserFormComponent } from './user-form/user-form.component';
 import { UsersPanelComponent } from './users-panel/users-panel.component';
 import { BooksComponent } from './books/books.component';
+import { AuthorsComponent } from './authors/authors.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { BooksComponent } from './books/books.component';
     RegisterComponent,
     UserFormComponent,
     UsersPanelComponent,
-    BooksComponent
+    BooksComponent,
+    AuthorsComponent
   ],
   imports: [
     BrowserModule,
