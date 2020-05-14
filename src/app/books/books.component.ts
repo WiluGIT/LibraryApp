@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IBookViewModel } from '../ClientViewModels/IBookViewModel';
 import { MatTableDataSource } from '@angular/material/table';
 import { BookService } from '../services/book.service';
+import { IBookAuthorViewModel } from '../ClientViewModels/IBookAuthorViewModel';
 
 @Component({
   selector: 'app-books',
@@ -9,11 +10,11 @@ import { BookService } from '../services/book.service';
   styleUrls: ['./books.component.css']
 })
 export class BooksComponent implements OnInit {
-  displayedColumns = ["bookId", "title", "releaseDate", "actions"];
-  books: IBookViewModel[];
+  displayedColumns = ["bookId", "title", "releaseDate","totalCount","authors", "actions"];
+  books: IBookAuthorViewModel[];
   bookCount: number;
-  dataSource: MatTableDataSource<IBookViewModel>;
-  activePageDataChunk:Array<IBookViewModel> = [];
+  dataSource: MatTableDataSource<IBookAuthorViewModel>;
+  activePageDataChunk:Array<IBookAuthorViewModel> = [];
   pageSize:number = 5;
   constructor(private bookService:BookService) { }
 
@@ -25,7 +26,7 @@ export class BooksComponent implements OnInit {
       this.activePageDataChunk = data.slice(0,this.pageSize);
       this.dataSource = new MatTableDataSource(this.activePageDataChunk);
       this.dataSource.filterPredicate = function(data, filter: string): boolean {
-        return data.title.toLowerCase().includes(filter);
+        return data.book.title.toLowerCase().includes(filter);
       };
       console.log(this.activePageDataChunk)
     });
@@ -45,10 +46,12 @@ export class BooksComponent implements OnInit {
 
   deleteBook(bookId){
     console.log(bookId)
-    this.bookService.deleteBook(bookId.toString())
-    .subscribe(data => console.log(data));
+    this.bookService.deleteBook(bookId)
+    .subscribe(data => {
+      console.log(data);
+    });
 
-    var filteredList: IBookViewModel[] = this.books.filter(book => book.bookId !== bookId);
+    var filteredList: IBookAuthorViewModel[] = this.books.filter(book => book.book.bookId !== bookId);
     this.books = filteredList;
     this.bookCount = this.books.length;
 

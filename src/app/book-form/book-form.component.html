@@ -1,0 +1,57 @@
+<div class="row form-wrapper">
+    <div class="col-lg-6 col-md-8 col-sm-12">
+        <div class="mb-3 card mx-auto">
+            <div class="card-header-tab card-header ">
+                <div>
+                    <a [routerLink]="['/books']" class="btn btn-outline-secondary">Back to panel</a>
+                </div>
+                <div class="text-center">
+                    <span class="text-center">Create Author</span>
+                </div>
+            </div>
+            <form [formGroup]="bookForm" (ngSubmit)="addBook()">
+                Value: {{bookForm.value | json}}
+                <hr />
+                <mat-form-field appearance="fill">
+                    <mat-label>Enter book title</mat-label>
+                    <input matInput placeholder="Ex. The Lord of the Rings" formControlName="title">
+                    <mat-error *ngIf="title.invalid">Title is required</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Enter release date</mat-label>
+                    <input formControlName="releaseDate" matInput [matDatepicker]="picker">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker disabled="false"></mat-datepicker>
+                    <mat-error *ngIf="releaseDate.invalid">Date is required</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Enter total count</mat-label>
+                    <input matInput placeholder="Ex. 5" formControlName="totalCount">
+                    <mat-error *ngIf="totalCount.invalid">Count is required</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Pick book authors</mat-label>
+                    <mat-select formControlName="authors" multiple>
+                        <mat-select-trigger>
+                            {{this.bookForm.controls.authors.value ? this.bookForm.controls['authors']?.value[0]: ''}}
+                            <span *ngIf="bookForm.controls.authors.value?.length > 1"
+                                class="example-additional-selection">
+                                (+{{bookForm.controls.authors.value.length - 1}}
+                                {{bookForm.controls.authors.value?.length === 2 ? 'another' : 'others'}})
+                            </span>
+                        </mat-select-trigger>
+                        <mat-option *ngFor="let author of authorList" [value]="author.authorId">{{author.firstName}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="bookForm.controls.authors.errors?.required">Authors must be picked
+                    </mat-error>
+                </mat-form-field>
+                <div class="text-center">
+                    <button type="submit" [disabled]="bookForm.invalid" class="btn btn-outline-primary">Create</button>
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

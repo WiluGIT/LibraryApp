@@ -9,6 +9,7 @@ import { UsersPanelComponent } from './users-panel/users-panel.component';
 import { BooksComponent } from './books/books.component';
 import { AuthorsComponent } from './authors/authors.component';
 import { AuthorFormComponent } from './author-form/author-form.component';
+import { BookFormComponent } from './book-form/book-form.component';
 
 
 const routes: Routes = [
@@ -20,7 +21,8 @@ const routes: Routes = [
   { path: 'users', component: UsersPanelComponent, canActivate: [AuthGuardService]},
   { path: 'authors', component: AuthorsComponent, canActivate: [AuthGuardService]},
   { path: 'author-form', component: AuthorFormComponent, canActivate: [AuthGuardService]},
-  { path: 'books', component: BooksComponent}
+  { path: 'books', component: BooksComponent},
+  { path: 'book-form', component: BookFormComponent, canActivate: [AuthGuardService]}
 ];
 
 @NgModule({
