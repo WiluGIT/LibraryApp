@@ -56,7 +56,6 @@ export class BookService {
     return this.http.get(this.bookPath).pipe(map((book: IBookAuthorViewModel[]) => book));
   }
   getBookFilter(data) {
-    console.log(this.toQueryString(data))
 
     return this.http.get(this.getBooksParamsPath + this.toQueryString(data)).pipe(map((book: IBookAuthorViewModel[]) => book));
   }

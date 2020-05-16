@@ -57,12 +57,7 @@ export class BooksComponent implements OnInit {
     this.activePageDataChunk = this.books.slice(firstCut, secondCut);
     this.dataSource = new MatTableDataSource(this.activePageDataChunk);
   }
-  applyFilter(event: Event) {
-    this.dataSource = new MatTableDataSource(this.books);
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-  }
+ 
 
   deleteBook(bookId) {
     console.log(bookId)
