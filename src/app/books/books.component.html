@@ -1,11 +1,54 @@
 <div>
     <a [routerLink]="['/book-form']" class="btn btn-outline-primary">Create book</a>
 </div>
+<div class="row form-wrapper">
+    <div class="mb-3 card .mx-auto">
+        <form [formGroup]="bookFilterForm" (ngSubmit)="applyFilters()">
+            <mat-form-field class="example-full-width text-center">
+                <mat-label>Search by title</mat-label>
+                <input matInput formControlName="Title" placeholder="Ex The Lord of the Rings">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Enter release year</mat-label>
+                <input formControlName="ReleaseDate" matInput [matDatepicker]="picker1">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1 disabled="false"></mat-datepicker>
+            </mat-form-field>
+      
 
-<mat-form-field class="example-full-width text-center">
-    <mat-label>Search by title</mat-label>
-    <input (keyup)="applyFilter($event)" matInput placeholder="Ex The Lord of the Rings">
-</mat-form-field>
+            <div class="inl-wrapper">
+                <div class="inline-date">
+                    <mat-form-field>
+                        <mat-label>Enter date from</mat-label>
+                        <input formControlName="ReleaseDateFrom" matInput [matDatepicker]="picker2">
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2 disabled="false"></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="inline-date">
+                    <mat-form-field>
+                        <mat-label>Enter date to</mat-label>
+                        <input formControlName="ReleaseDateTo" matInput [matDatepicker]="picker3">
+                        <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                        <mat-datepicker #picker3 disabled="false"></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+    
+    
+    
+        
+            <div class="text-center">
+                <button type="submit" [disabled]="bookFilterForm.invalid" class="btn btn-outline-primary">Apply filters</button>
+        
+            </div>
+        </form>
+        
+    </div>
+</div>
+
+
+
 <mat-table class="mat-elevation-z8" [dataSource]="dataSource">
 
     <ng-container matColumnDef="bookId">

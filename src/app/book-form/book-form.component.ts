@@ -33,7 +33,7 @@ export class BookFormComponent implements OnInit {
       title: ['', [
         Validators.required
       ]],
-      releaseDate: [new Date(), [
+      releaseDate: ['', [
         Validators.required
       ]],
       totalCount: ['', [
