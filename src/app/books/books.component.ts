@@ -4,6 +4,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { BookService } from '../services/book.service';
 import { IBookAuthorViewModel } from '../ClientViewModels/IBookAuthorViewModel';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { AuthorService } from '../services/author.service';
+import { IAuthorViewModel } from '../ClientViewModels/IAuthorViewModel';
 
 @Component({
   selector: 'app-books',
@@ -18,7 +20,8 @@ export class BooksComponent implements OnInit {
   dataSource: MatTableDataSource<IBookAuthorViewModel>;
   activePageDataChunk: Array<IBookAuthorViewModel> = [];
   pageSize: number = 5;
-  constructor(private bookService: BookService, private fb: FormBuilder) { }
+  authorList: IAuthorViewModel[];
+  constructor(private bookService: BookService, private fb: FormBuilder, private authorService:AuthorService) { }
 
   ngOnInit() {
     this.bookFilterForm = this.fb.group({
@@ -31,7 +34,10 @@ export class BooksComponent implements OnInit {
 
       ]],
       ReleaseDateTo: ['', [
-      ]]
+      ]],
+      authors: ['', [
+
+      ]],
     });
     this.bookService.getBooks()
       .subscribe(data => {
@@ -41,6 +47,9 @@ export class BooksComponent implements OnInit {
         this.dataSource = new MatTableDataSource(this.activePageDataChunk);
 
       });
+
+    this.authorService.getAuthors()
+      .subscribe(data => this.authorList = data);
   }
   onPageChanged(e) {
     let firstCut = e.pageIndex * e.pageSize;
@@ -72,27 +81,30 @@ export class BooksComponent implements OnInit {
 
   applyFilters() {
     var filterObj = {};
-    if (this.bookFilterForm.controls["Title"].value){
+    if (this.bookFilterForm.controls["Title"].value) {
       filterObj["Title"] = this.bookFilterForm.controls["Title"].value;
 
     }
-    if (this.bookFilterForm.controls["ReleaseDate"].value){
+    if (this.bookFilterForm.controls["ReleaseDate"].value) {
       var dateStrToSendToServer = new Date(this.bookFilterForm.controls["ReleaseDate"].value)
       filterObj["ReleaseDate"] = dateStrToSendToServer.toISOString();
     }
 
-      
-    if (this.bookFilterForm.controls["ReleaseDateFrom"].value){
+
+    if (this.bookFilterForm.controls["ReleaseDateFrom"].value) {
       var dateStrToSendToServer = new Date(this.bookFilterForm.controls["ReleaseDateFrom"].value)
       filterObj["ReleaseDateFrom"] = dateStrToSendToServer.toISOString();
 
     }
-    if (this.bookFilterForm.controls["ReleaseDateTo"].value){
+    if (this.bookFilterForm.controls["ReleaseDateTo"].value) {
       var dateStrToSendToServer = new Date(this.bookFilterForm.controls["ReleaseDateTo"].value)
       filterObj["ReleaseDateTo"] = dateStrToSendToServer.toISOString();
 
     }
+    if (this.bookFilterForm.controls["authors"].value) {
+      filterObj["authorIds"] = this.bookFilterForm.controls["authors"].value;
 
+    }
     this.bookService.getBookFilter(filterObj)
       .subscribe(data => {
         this.books = data;

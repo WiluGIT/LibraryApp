@@ -4,6 +4,7 @@
 <div class="row form-wrapper">
     <div class="mb-3 card .mx-auto">
         <form [formGroup]="bookFilterForm" (ngSubmit)="applyFilters()">
+
             <mat-form-field class="example-full-width text-center">
                 <mat-label>Search by title</mat-label>
                 <input matInput formControlName="Title" placeholder="Ex The Lord of the Rings">
@@ -14,8 +15,21 @@
                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                 <mat-datepicker #picker1 disabled="false"></mat-datepicker>
             </mat-form-field>
-      
-
+            <mat-form-field>
+                <mat-label>Pick book authors</mat-label>
+                <mat-select formControlName="authors" multiple>
+                    <mat-select-trigger>
+                        {{this.bookFilterForm.controls.authors.value ? this.bookFilterForm.controls['authors']?.value[0]: ''}}
+                        <span *ngIf="bookFilterForm.controls.authors.value?.length > 1"
+                            class="example-additional-selection">
+                            (+{{bookFilterForm.controls.authors.value.length - 1}}
+                            {{bookFilterForm.controls.authors.value?.length === 2 ? 'another' : 'others'}})
+                        </span>
+                    </mat-select-trigger>
+                    <mat-option *ngFor="let author of authorList" [value]="author.authorId">{{author.firstName.substr(0,1) + ". " + author.lastName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
             <div class="inl-wrapper">
                 <div class="inline-date">
                     <mat-form-field>
@@ -34,10 +48,8 @@
                     </mat-form-field>
                 </div>
             </div>
-    
-    
-    
-        
+      
+       
             <div class="text-center">
                 <button type="submit" [disabled]="bookFilterForm.invalid" class="btn btn-outline-primary">Apply filters</button>
         

@@ -21,44 +21,58 @@ export class BookService {
   private updateBookPath = environment.apiUrl + 'api/Book/EditBook/';
   constructor(private http: HttpClient, private authService: AuthService) { }
 
-  toQueryString(obj){
-    var parts=[];
+  toQueryString(obj) {
+    var parts = [];
 
-    for(var prop in obj){
+    for (var prop in obj) {
       var value = obj[prop];
-      if(value !=null && value !=undefined)
-        parts.push(encodeURIComponent(prop)+ '=' + encodeURIComponent(value));
+      if (value != null && value != undefined) {
+        if (prop === "authorIds") {
+          for (var val of value) {
+
+            parts.push(encodeURIComponent(prop) + '=' + encodeURIComponent(val));
+          }
+
+        } else {
+          parts.push(encodeURIComponent(prop) + '=' + encodeURIComponent(value));
+        }
+
+
+      }
+
     }
 
     return parts.join('&');
   }
-  createBook(book:IBookViewModel){
+  createBook(book: IBookViewModel) {
     return this.http.post(this.createBookPath, book);
   }
-  addAuthorToBook(authorId, bookId){
-    return this.http.post(this.addAuthorToBookPath + authorId + "/" + bookId,null);
+  addAuthorToBook(authorId, bookId) {
+    return this.http.post(this.addAuthorToBookPath + authorId + "/" + bookId, null);
   }
 
-  getBooks():Observable<IBookAuthorViewModel[]>{
+  getBooks(): Observable<IBookAuthorViewModel[]> {
 
     return this.http.get(this.bookPath).pipe(map((book: IBookAuthorViewModel[]) => book));
   }
-  getBookFilter(data){
+  getBookFilter(data) {
+    console.log(this.toQueryString(data))
+
     return this.http.get(this.getBooksParamsPath + this.toQueryString(data)).pipe(map((book: IBookAuthorViewModel[]) => book));
   }
 
-  getBook(bookId){
+  getBook(bookId) {
     return this.http.get(this.getBookPath + bookId).pipe(map((book: IBookAuthorViewModel) => book));
   }
 
-  updateBook(book:IBookViewModel){
+  updateBook(book: IBookViewModel) {
     return this.http.put(this.updateBookPath + book.bookId, book);
   }
 
-  deleteBook(bookId){
+  deleteBook(bookId) {
     return this.http.delete(this.deleteBookPath + bookId);
   }
-  deleteAuthorFromBook(authorId,bookId){
-    return this.http.post(this.deleteAuthorFromBookPath + authorId + "/" + bookId,null);
+  deleteAuthorFromBook(authorId, bookId) {
+    return this.http.post(this.deleteAuthorFromBookPath + authorId + "/" + bookId, null);
   }
 }
