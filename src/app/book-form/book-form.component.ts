@@ -128,8 +128,8 @@ export class BookFormComponent implements OnInit {
     else {
       // add book
       this.bookService.createBook(book).subscribe(data => {
-        this.bookForm.controls["authors"].value.map(el => {
-          this.bookService.addAuthorToBook(el, data["id"])
+        authList.map(el => {
+          this.bookService.addAuthorToBook(el.authorId, data["id"])
             .subscribe(data => console.log(data))
         });
       });
