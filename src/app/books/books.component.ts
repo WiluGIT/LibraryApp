@@ -6,6 +6,7 @@ import { IBookAuthorViewModel } from '../ClientViewModels/IBookAuthorViewModel';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { AuthorService } from '../services/author.service';
 import { IAuthorViewModel } from '../ClientViewModels/IAuthorViewModel';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-books',
@@ -21,7 +22,7 @@ export class BooksComponent implements OnInit {
   activePageDataChunk: Array<IBookAuthorViewModel> = [];
   pageSize: number = 5;
   authorList: IAuthorViewModel[];
-  constructor(private bookService: BookService, private fb: FormBuilder, private authorService:AuthorService) { }
+  constructor(private authService: AuthService, private bookService: BookService, private fb: FormBuilder, private authorService: AuthorService) { }
 
   ngOnInit() {
     this.bookFilterForm = this.fb.group({
@@ -50,6 +51,12 @@ export class BooksComponent implements OnInit {
 
     this.authorService.getAuthors()
       .subscribe(data => this.authorList = data);
+
+    this.authService.getUserInfo()
+      .subscribe(data => {
+        console.log(data["sub"])
+        localStorage.setItem('id', data["sub"]);
+      });
   }
   onPageChanged(e) {
     let firstCut = e.pageIndex * e.pageSize;
@@ -57,7 +64,7 @@ export class BooksComponent implements OnInit {
     this.activePageDataChunk = this.books.slice(firstCut, secondCut);
     this.dataSource = new MatTableDataSource(this.activePageDataChunk);
   }
- 
+
 
   deleteBook(bookId) {
     console.log(bookId)
@@ -108,6 +115,11 @@ export class BooksComponent implements OnInit {
         this.dataSource = new MatTableDataSource(this.activePageDataChunk);
       });
 
+  }
+
+  borrowBook(bookId: number) {
+    this.authService.getUserInfo()
+      .subscribe(data => console.log(data));
   }
 
 }
