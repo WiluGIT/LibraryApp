@@ -22,7 +22,8 @@ const routes: Routes = [
   { path: 'authors', component: AuthorsComponent, canActivate: [AuthGuardService]},
   { path: 'author-form', component: AuthorFormComponent, canActivate: [AuthGuardService]},
   { path: 'books', component: BooksComponent},
-  { path: 'book-form', component: BookFormComponent, canActivate: [AuthGuardService]}
+  { path: 'book-form', component: BookFormComponent, canActivate: [AuthGuardService]},
+  { path: 'book-form/:id', component: BookFormComponent, canActivate: [AuthGuardService]}
 ];
 
 @NgModule({

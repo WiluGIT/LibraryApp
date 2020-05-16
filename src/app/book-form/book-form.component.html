@@ -40,7 +40,7 @@
                                 {{bookForm.controls.authors.value?.length === 2 ? 'another' : 'others'}})
                             </span>
                         </mat-select-trigger>
-                        <mat-option *ngFor="let author of authorList" [value]="author.authorId">{{author.firstName}}
+                        <mat-option *ngFor="let author of authorList" [value]="author.firstName">{{author.firstName.substr(0,1) + ". " + author.lastName}}
                         </mat-option>
                     </mat-select>
                     <mat-error *ngIf="bookForm.controls.authors.errors?.required">Authors must be picked

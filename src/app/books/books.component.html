@@ -31,14 +31,21 @@
 
     <ng-container matColumnDef="authors">
         <mat-header-cell *matHeaderCellDef>Authors</mat-header-cell>
-        <mat-cell class="duration-cell" *matCellDef="let element"><div *ngFor="let author of element.authors">{{author.firstName.substr(0,1) + ". " + author.lastName + "| "}}</div></mat-cell>
+        <mat-cell class="duration-cell" *matCellDef="let element">
+            <div *ngFor="let author of element.authors">{{author.firstName.substr(0,1) + ". " + author.lastName + "| "}}
+            </div>
+        </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>Actions</th>
         <td mat-cell *matCellDef="let row">
-            <button (click)="deleteBook(row.book.bookId)" mat-icon-button matTooltip="Click to Delete" class="iconbutton"
-                color="warn">
+            <a [routerLink]="'/book-form/'+row.book.bookId" mat-icon-button matTooltip="Click to Edit"
+                class="iconbutton" color="primary">
+                <mat-icon aria-label="edit">edit</mat-icon>
+            </a>
+            <button (click)="deleteBook(row.book.bookId)" mat-icon-button matTooltip="Click to Delete"
+                class="iconbutton" color="warn">
                 <mat-icon aria-label="delete">delete</mat-icon>
             </button>
         </td>

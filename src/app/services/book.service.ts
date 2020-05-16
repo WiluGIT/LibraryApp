@@ -16,6 +16,8 @@ export class BookService {
   private createBookPath = environment.apiUrl + 'api/Book/AddBook';
   private addAuthorToBookPath = environment.apiUrl + 'api/AuthorBook/AddAuthorToBook/'
   private deleteAuthorFromBookPath = environment.apiUrl + 'api/AuthorBook/DeleteAuthorFromBook/';
+  private getBookPath = environment.apiUrl + 'api/Book/GetBook/';
+  private updateBookPath = environment.apiUrl + 'api/Book/EditBook/';
   constructor(private http: HttpClient, private authService: AuthService) { }
 
   createBook(book:IBookViewModel){
@@ -25,9 +27,16 @@ export class BookService {
     return this.http.post(this.addAuthorToBookPath + authorId + "/" + bookId,null);
   }
 
-
   getBooks():Observable<IBookAuthorViewModel[]>{
-    return this.http.get(this.bookPath).pipe(map((book: IBookAuthorViewModel[]) => book));;
+    return this.http.get(this.bookPath).pipe(map((book: IBookAuthorViewModel[]) => book));
+  }
+
+  getBook(bookId){
+    return this.http.get(this.getBookPath + bookId).pipe(map((book: IBookAuthorViewModel) => book));
+  }
+
+  updateBook(book:IBookViewModel){
+    return this.http.put(this.updateBookPath + book.bookId, book);
   }
 
   deleteBook(bookId){
