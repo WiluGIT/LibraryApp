@@ -22,7 +22,7 @@ export class BorrowedBooksComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+    this.borrowedBooks=[];
     this.bookService.getBorrowedBooks(this.userId)
     .subscribe(data => {
       this.borrowedBooks=data;

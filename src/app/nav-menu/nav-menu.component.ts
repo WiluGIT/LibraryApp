@@ -1,21 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav-menu',
   templateUrl: './nav-menu.component.html',
   styleUrls: ['./nav-menu.component.css']
 })
-export class NavMenuComponent implements OnInit {
-  // isLogged: boolean;
-  // isAdmin: boolean;
-  isExpanded = false;
-  constructor(private authService:AuthService){}
+export class NavMenuComponent {
 
-  ngOnInit(){
-    // this.isLogged = this.authService.isAuthenticated().s;
-    // this.isAdmin = this.authService.isAdmin();
-  }
+  isExpanded = false;
+  constructor(private authService:AuthService, private router:Router){}
+
+ 
 
   collapse() {
     this.isExpanded = false;
@@ -27,7 +24,7 @@ export class NavMenuComponent implements OnInit {
 
   logout(){
     this.authService.logout();
-
+    this.router.navigate([""]);
   }
 
 }

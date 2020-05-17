@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, FormGroupDirective, NgForm } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -10,7 +11,7 @@ import { ErrorStateMatcher } from '@angular/material/core';
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
-  constructor(private fb: FormBuilder, private authService:AuthService) { }
+  constructor(private fb: FormBuilder, private authService:AuthService, private router:Router) { }
   matcher = new MyErrorStateMatcher();
 
   ngOnInit() {
@@ -47,6 +48,8 @@ export class RegisterComponent implements OnInit {
     console.log(this.registerForm.value);
     this.authService.register(this.registerForm.value)
     .subscribe(data => console.log(data));
+
+    this.router.navigate([""]);
   }
 
   checkPasswords(group: FormGroup){
