@@ -56,6 +56,7 @@ import { BooksComponent } from './books/books.component';
 import { AuthorsComponent } from './authors/authors.component';
 import { AuthorFormComponent } from './author-form/author-form.component';
 import { BookFormComponent } from './book-form/book-form.component';
+import { BorrowedBooksComponent } from './borrowed-books/borrowed-books.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import { BookFormComponent } from './book-form/book-form.component';
     BooksComponent,
     AuthorsComponent,
     AuthorFormComponent,
-    BookFormComponent
+    BookFormComponent,
+    BorrowedBooksComponent
   ],
   imports: [
     BrowserModule,

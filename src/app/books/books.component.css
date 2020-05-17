@@ -44,4 +44,12 @@ td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
   .inl-wrapper{
     justify-content: center !important;
   }
+
+  .left{
+    float: left;
+  }
+
+  .right{
+    float: right;
+  }
  

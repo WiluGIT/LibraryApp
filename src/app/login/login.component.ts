@@ -36,6 +36,8 @@ export class LoginComponent implements OnInit {
     .subscribe(data => {
       this.authService.saveToken(data.access_token);
     });
+
+    window.location.reload();
   }
 
 }

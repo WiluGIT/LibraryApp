@@ -1,0 +1,18 @@
+<div class="row">
+    <div *ngFor="let book of borrowedBooks" class="col-lg-4 col-md-6 d-flex align-items-stretch">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">{{book.book.title}}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{book.book.releaseDate.substr(0,4)}}</h6>
+                <p *ngFor="let author of book.authors" class="card-text">
+                    {{author.firstName.substr(0,1) + ". " + author.lastName}}</p>
+                <button (click)="returnBook(book.book.bookId)" id="card-btn" mat-icon-button matTooltip="Click to Return" class="iconbutton " color="warn"
+                    class="card-link">Return book
+                    <mat-icon aria-label="exit_to_app">exit_to_app</mat-icon>
+                </button>
+                
+            </div>
+        </div>
+    </div>
+
+</div>

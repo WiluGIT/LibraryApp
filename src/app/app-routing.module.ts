@@ -10,6 +10,7 @@ import { BooksComponent } from './books/books.component';
 import { AuthorsComponent } from './authors/authors.component';
 import { AuthorFormComponent } from './author-form/author-form.component';
 import { BookFormComponent } from './book-form/book-form.component';
+import { BorrowedBooksComponent } from './borrowed-books/borrowed-books.component';
 
 
 const routes: Routes = [
@@ -17,13 +18,15 @@ const routes: Routes = [
   { path:'login', component: LoginComponent},
   { path:'register', component: RegisterComponent},
   // TODO create admin guard service
-  { path: 'user-form', component: UserFormComponent, canActivate: [AuthGuardService]},
-  { path: 'users', component: UsersPanelComponent, canActivate: [AuthGuardService]},
-  { path: 'authors', component: AuthorsComponent, canActivate: [AuthGuardService]},
-  { path: 'author-form', component: AuthorFormComponent, canActivate: [AuthGuardService]},
-  { path: 'books', component: BooksComponent},
-  { path: 'book-form', component: BookFormComponent, canActivate: [AuthGuardService]},
-  { path: 'book-form/:id', component: BookFormComponent, canActivate: [AuthGuardService]}
+  { path: 'user-form', component: UserFormComponent, canActivate: [AuthGuardService]}, //ADMIN
+  { path: 'users', component: UsersPanelComponent, canActivate: [AuthGuardService]}, //ADMIN
+  { path: 'authors', component: AuthorsComponent, canActivate: [AuthGuardService]}, // ADMIN
+  { path: 'author-form', component: AuthorFormComponent, canActivate: [AuthGuardService]}, // ADMIN
+  { path: 'books', component: BooksComponent}, // USER
+  { path: 'book-form', component: BookFormComponent, canActivate: [AuthGuardService]}, // ADMIN
+  { path: 'book-form/:id', component: BookFormComponent, canActivate: [AuthGuardService]}, // ADMIN
+  { path: 'my-books/:id', component: BorrowedBooksComponent, canActivate: [AuthGuardService]}, // USER
+  // + borrow and return action must be for logged user
 ];
 
 @NgModule({

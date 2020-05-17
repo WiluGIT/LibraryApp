@@ -19,6 +19,9 @@ export class BookService {
   private deleteAuthorFromBookPath = environment.apiUrl + 'api/AuthorBook/DeleteAuthorFromBook/';
   private getBookPath = environment.apiUrl + 'api/Book/GetBook/';
   private updateBookPath = environment.apiUrl + 'api/Book/EditBook/';
+  private borrowBookPath = environment.apiUrl + 'api/UserBorrow/BorrowBook/';
+  private getBorrowedBooksPath = environment.apiUrl + 'api/UserBorrow/GetUserBorrowBooks/';
+  private returnBookPath = environment.apiUrl +"api/UserBorrow/ReturnBook/";
   constructor(private http: HttpClient, private authService: AuthService) { }
 
   toQueryString(obj) {
@@ -36,13 +39,20 @@ export class BookService {
         } else {
           parts.push(encodeURIComponent(prop) + '=' + encodeURIComponent(value));
         }
-
-
       }
-
     }
 
     return parts.join('&');
+  }
+  getBorrowedBooks(userId:string){
+    return this.http.get(this.getBorrowedBooksPath + userId).pipe(map((book: IBookAuthorViewModel[]) => book));
+  }
+  returnBook(userId:string, bookId:number){
+    return this.http.post(this.returnBookPath+ userId + "/" +bookId,null);
+  }
+
+  borrowBook(userId:string, bookId:number){
+    return this.http.post(this.borrowBookPath + userId + "/" + bookId,null);
   }
   createBook(book: IBookViewModel) {
     return this.http.post(this.createBookPath, book);

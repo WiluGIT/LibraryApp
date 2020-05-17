@@ -28,6 +28,10 @@ export class AuthService {
     return this.http.post(this.loginPath,body.toString(), this.options);
   }
 
+  logout(){
+    localStorage.removeItem('token');
+    localStorage.removeItem('id');
+  }
   getUserInfo(){
     return this.http.get(this.dataPath);
   }

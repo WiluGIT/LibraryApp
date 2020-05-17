@@ -7,6 +7,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { AuthorService } from '../services/author.service';
 import { IAuthorViewModel } from '../ClientViewModels/IAuthorViewModel';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-books',
@@ -22,7 +23,12 @@ export class BooksComponent implements OnInit {
   activePageDataChunk: Array<IBookAuthorViewModel> = [];
   pageSize: number = 5;
   authorList: IAuthorViewModel[];
-  constructor(private authService: AuthService, private bookService: BookService, private fb: FormBuilder, private authorService: AuthorService) { }
+  userId:string;
+  constructor(private authService: AuthService, 
+    private bookService: BookService, 
+    private fb: FormBuilder, 
+    private authorService: AuthorService,
+    private router: Router) { }
 
   ngOnInit() {
     this.bookFilterForm = this.fb.group({
@@ -54,8 +60,8 @@ export class BooksComponent implements OnInit {
 
     this.authService.getUserInfo()
       .subscribe(data => {
-        console.log(data["sub"])
         localStorage.setItem('id', data["sub"]);
+        this.userId = data["sub"];
       });
   }
   onPageChanged(e) {
@@ -118,8 +124,11 @@ export class BooksComponent implements OnInit {
   }
 
   borrowBook(bookId: number) {
-    this.authService.getUserInfo()
-      .subscribe(data => console.log(data));
+    const userId = localStorage.getItem("id");
+    this.bookService.borrowBook(userId, bookId)
+    .subscribe(data=>console.log(data));
+
+    this.router.navigate(['/my-books/'+userId]);
   }
 
 }
