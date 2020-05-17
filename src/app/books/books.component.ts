@@ -24,6 +24,7 @@ export class BooksComponent implements OnInit {
   pageSize: number = 5;
   authorList: IAuthorViewModel[];
   userId:string;
+  isAdmin:boolean;
   constructor(private authService: AuthService, 
     private bookService: BookService, 
     private fb: FormBuilder, 
@@ -63,6 +64,9 @@ export class BooksComponent implements OnInit {
         localStorage.setItem('id', data["sub"]);
         this.userId = data["sub"];
       });
+    this.isAdmin = this.authService.isAdmin();
+
+    
   }
   onPageChanged(e) {
     let firstCut = e.pageIndex * e.pageSize;

@@ -1,3 +1,7 @@
+<div>
+    <a [routerLink]="['/books']" class="btn btn-outline-secondary" >Back to panel</a>
+</div>
+<hr/>
 <div class="row">
     <div *ngFor="let book of borrowedBooks" class="col-lg-4 col-md-6 d-flex align-items-stretch">
         <div class="card" style="width: 18rem;">
@@ -14,5 +18,9 @@
             </div>
         </div>
     </div>
+ 
 
+</div>
+<div *ngIf="borrowedBooks?.length <= 0">
+    <p><strong>You don't have any borrowed books</strong></p>
 </div>

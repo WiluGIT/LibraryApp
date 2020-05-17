@@ -1,5 +1,5 @@
 <div style="overflow: hidden;">
-    <a [routerLink]="['/book-form']" class="btn btn-outline-primary left">Create book</a>
+    <a *ngIf="isAdmin" [routerLink]="['/book-form']" class="btn btn-outline-primary left">Create book</a>
     <a [routerLink]="['/my-books/'+userId]" class="btn btn-outline-warning right">My books</a>
 </div>
 

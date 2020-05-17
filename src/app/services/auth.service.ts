@@ -34,6 +34,12 @@ export class AuthService {
     localStorage.removeItem('id');
     localStorage.removeItem('role');
   }
+
+  isAdmin(){
+    if(localStorage.getItem('role') ==="admin")
+      return true;
+    return false;
+  }
   getUserInfo(){
     return this.http.get(this.dataPath);
   }

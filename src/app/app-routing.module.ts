@@ -22,7 +22,7 @@ const routes: Routes = [
   { path: 'users', component: UsersPanelComponent, canActivate: [AuthGuardService]}, //ADMIN
   { path: 'authors', component: AuthorsComponent, canActivate: [AuthGuardService]}, // ADMIN
   { path: 'author-form', component: AuthorFormComponent, canActivate: [AuthGuardService]}, // ADMIN
-  { path: 'books', component: BooksComponent}, // USER
+  { path: 'books', component: BooksComponent, canActivate: [AuthGuardService]}, // USER
   { path: 'book-form', component: BookFormComponent, canActivate: [AuthGuardService]}, // ADMIN
   { path: 'book-form/:id', component: BookFormComponent, canActivate: [AuthGuardService]}, // ADMIN
   { path: 'my-books/:id', component: BorrowedBooksComponent, canActivate: [AuthGuardService]}, // USER

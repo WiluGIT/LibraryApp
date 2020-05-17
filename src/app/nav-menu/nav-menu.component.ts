@@ -7,12 +7,14 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./nav-menu.component.css']
 })
 export class NavMenuComponent implements OnInit {
-  isLogged: boolean;
+  // isLogged: boolean;
+  // isAdmin: boolean;
   isExpanded = false;
   constructor(private authService:AuthService){}
 
   ngOnInit(){
-    this.isLogged = this.authService.isAuthenticated();
+    // this.isLogged = this.authService.isAuthenticated().s;
+    // this.isAdmin = this.authService.isAdmin();
   }
 
   collapse() {
@@ -26,7 +28,6 @@ export class NavMenuComponent implements OnInit {
   logout(){
     this.authService.logout();
 
-    window.location.reload();
   }
 
 }
