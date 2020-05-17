@@ -9,16 +9,17 @@ import { AuthService } from '../services/auth.service';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  constructor(private fb: FormBuilder, private authService:AuthService) { }
+  userId: string;
+  constructor(private fb: FormBuilder, private authService: AuthService) { }
 
   ngOnInit() {
     this.loginForm = this.fb.group({
-      userName: ['',[
+      userName: ['', [
         Validators.required
       ]],
-      password: ['',[
+      password: ['', [
         Validators.required
-        
+
       ]]
     });
   }
@@ -30,12 +31,20 @@ export class LoginComponent implements OnInit {
     return this.loginForm.get('password');
   }
 
-  login(){
+  login() {
     console.log(this.loginForm.value);
     this.authService.login(this.loginForm.value)
-    .subscribe(data => {
-      this.authService.saveToken(data.access_token);
-    });
+      .subscribe(data => {
+        this.authService.saveToken(data.access_token);
+        this.authService.getUserInfo()
+          .subscribe(data => {
+            this.authService.getUserRole(data["sub"])
+              .subscribe(role => {
+                this.authService.saveRole(role["message"]);
+              });
+          })
+      });
+
 
     window.location.reload();
   }

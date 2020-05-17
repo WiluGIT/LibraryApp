@@ -10,6 +10,7 @@ export class AuthService {
   private loginPath = environment.apiUrl + 'connect/token';
   private registerPath = environment.apiUrl + 'api/User/AddUser';
   private dataPath = environment.apiUrl + 'connect/userinfo';
+  private getUserRolePath = environment.apiUrl + 'api/Role/GetUserRole/';
   private options = {
     headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
   };
@@ -31,9 +32,16 @@ export class AuthService {
   logout(){
     localStorage.removeItem('token');
     localStorage.removeItem('id');
+    localStorage.removeItem('role');
   }
   getUserInfo(){
     return this.http.get(this.dataPath);
+  }
+  getUserRole(userId:string){
+    return this.http.get(this.getUserRolePath + userId);
+  }
+  saveRole(role:string){
+    localStorage.setItem('role',role);
   }
   register(data): Observable<any>{
     return this.http.post(this.registerPath,data);
