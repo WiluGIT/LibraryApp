@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IAuthorViewModel } from '../ClientViewModels/IAuthorViewModel';
 import { MatTableDataSource } from '@angular/material/table';
 import { AuthorService } from '../services/author.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-authors',
@@ -16,7 +17,7 @@ export class AuthorsComponent implements OnInit {
   activePageDataChunk:Array<IAuthorViewModel> = [];
   pageSize:number = 5;
 
-  constructor(private authorService:AuthorService) { }
+  constructor(private authorService:AuthorService, public snackBar: MatSnackBar) { }
 
 
   ngOnInit() {
@@ -44,14 +45,29 @@ export class AuthorsComponent implements OnInit {
 
   deleteAuthor(authorId){
     this.authorService.deleteAuthor(authorId.toString())
-    .subscribe(data => console.log(data));
+    .subscribe(data => {
+      if(data['status']===1){
+        this.openSnackBar(data["message"], 'Close', 'red-snackbar')
+      }else{
+        this.openSnackBar('Author deleted successfully', 'Close', 'green-snackbar')
+ 
+        var filteredList: IAuthorViewModel[] = this.authors.filter(a => a.authorId !== authorId);
+        this.authors = filteredList;
+        this.authorsCount = this.authors.length;
+    
+        this.dataSource = new MatTableDataSource(this.authors.slice(0,this.pageSize));
+      }
+    });
 
-    var filteredList: IAuthorViewModel[] = this.authors.filter(a => a.authorId !== authorId);
-    this.authors = filteredList;
-    this.authorsCount = this.authors.length;
 
-    this.dataSource = new MatTableDataSource(this.authors.slice(0,this.pageSize));
+  }
 
+   
+  openSnackBar(message: string, action: string, className: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+      panelClass: [className]
+    });
   }
 
 }

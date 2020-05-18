@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormControl, FormGroupDirective, Ng
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MyErrorStateMatcher } from '../register/register.component';
 import { AuthorService } from '../services/author.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-author-form',
@@ -12,7 +13,10 @@ import { AuthorService } from '../services/author.service';
 export class AuthorFormComponent implements OnInit {
 
   authorForm: FormGroup;
-  constructor(private fb: FormBuilder, private authorService:AuthorService) { }
+  constructor(
+    private fb: FormBuilder, 
+    private authorService:AuthorService,
+    private snackBar:MatSnackBar) { }
   matcher = new MyErrorStateMatcher();
 
   ngOnInit() {
@@ -37,7 +41,20 @@ export class AuthorFormComponent implements OnInit {
 
   addAuthor(){
     this.authorService.addAuthor(this.authorForm.value)
-    .subscribe(data => console.log(data));
+    .subscribe(data => {
+      if(data['status']===1){
+        this.openSnackBar(data["message"], 'Close', 'red-snackbar')
+      }else{
+        this.openSnackBar('Author added successfully', 'Close', 'green-snackbar')
+      }
+    });
+  }
+
+  openSnackBar(message: string, action: string, className: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+      panelClass: [className]
+    });
   }
 
 }
