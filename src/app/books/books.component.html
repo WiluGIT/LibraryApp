@@ -85,7 +85,7 @@
 
     <ng-container matColumnDef="totalCount">
         <mat-header-cell *matHeaderCellDef>Count</mat-header-cell>
-        <mat-cell class="duration-cell" *matCellDef="let element">{{element.book.totalCount}}</mat-cell>
+        <mat-cell class="duration-cell" *matCellDef="let element">{{element.book.availableCount}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="authors">
@@ -103,11 +103,11 @@
                 class="iconbutton" color="dark">
                 <mat-icon aria-label="import_contacts">import_contacts</mat-icon>
             </button>
-            <a [routerLink]="'/book-form/'+row.book.bookId" mat-icon-button matTooltip="Click to Edit"
+            <a *ngIf="isAdmin" [routerLink]="'/book-form/'+row.book.bookId" mat-icon-button matTooltip="Click to Edit"
                 class="iconbutton" color="primary">
                 <mat-icon aria-label="edit">edit</mat-icon>
             </a>
-            <button (click)="deleteBook(row.book.bookId)" mat-icon-button matTooltip="Click to Delete"
+            <button *ngIf="isAdmin" (click)="deleteBook(row.book.bookId)" mat-icon-button matTooltip="Click to Delete"
                 class="iconbutton" color="warn">
                 <mat-icon aria-label="delete">delete</mat-icon>
             </button>

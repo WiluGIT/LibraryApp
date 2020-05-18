@@ -8,6 +8,8 @@ import { AuthorService } from '../services/author.service';
 import { IAuthorViewModel } from '../ClientViewModels/IAuthorViewModel';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { error } from 'protractor';
 
 @Component({
   selector: 'app-books',
@@ -29,7 +31,8 @@ export class BooksComponent implements OnInit {
     private bookService: BookService, 
     private fb: FormBuilder, 
     private authorService: AuthorService,
-    private router: Router) { }
+    private router: Router,
+    public snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.bookFilterForm = this.fb.group({
@@ -130,9 +133,28 @@ export class BooksComponent implements OnInit {
   borrowBook(bookId: number) {
     const userId = localStorage.getItem("id");
     this.bookService.borrowBook(userId, bookId)
-    .subscribe(data=>console.log(data));
+    .subscribe(data=>{
+      if(data['status']===1){
+        this.openSnackBar(data["message"], 'Close', 'red-snackbar')
+      }else{
+        this.openSnackBar('Book borrowed', 'Close', 'green-snackbar')
+        this.router.navigate(['/my-books/'+userId]);
+      }
+      
+     
+    },error =>{
+      this.openSnackBar("Error", 'Close', 'red-snackbar')
+    });
 
-    this.router.navigate(['/my-books/'+userId]);
+    
+  }
+
+  
+  openSnackBar(message: string, action: string, className: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+      panelClass: [className]
+    });
   }
 
 }
