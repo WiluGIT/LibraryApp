@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
           })
 
           this.openSnackBar('Logged In!', 'Close', 'green-snackbar')
-          this.router.navigate([""]);
+          this.router.navigate(["books"]);
       }, error =>{
         this.openSnackBar(error.error["error_description"], 'Close', 'red-snackbar')
       });

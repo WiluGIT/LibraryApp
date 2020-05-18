@@ -11,22 +11,22 @@ import { AuthorsComponent } from './authors/authors.component';
 import { AuthorFormComponent } from './author-form/author-form.component';
 import { BookFormComponent } from './book-form/book-form.component';
 import { BorrowedBooksComponent } from './borrowed-books/borrowed-books.component';
+import { AdminGuardService } from './services/admin-guard.service';
 
 
 const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
   { path:'login', component: LoginComponent},
   { path:'register', component: RegisterComponent},
-  // TODO create admin guard service
-  { path: 'user-form', component: UserFormComponent, canActivate: [AuthGuardService]}, //ADMIN
-  { path: 'users', component: UsersPanelComponent, canActivate: [AuthGuardService]}, //ADMIN
-  { path: 'authors', component: AuthorsComponent, canActivate: [AuthGuardService]}, // ADMIN
-  { path: 'author-form', component: AuthorFormComponent, canActivate: [AuthGuardService]}, // ADMIN
+  { path: 'user-form', component: UserFormComponent, canActivate: [AdminGuardService]}, //ADMIN
+  { path: 'users', component: UsersPanelComponent, canActivate: [AdminGuardService]}, //ADMIN
+  { path: 'authors', component: AuthorsComponent, canActivate: [AdminGuardService]}, // ADMIN
+  { path: 'author-form', component: AuthorFormComponent, canActivate: [AdminGuardService]}, // ADMIN
   { path: 'books', component: BooksComponent, canActivate: [AuthGuardService]}, // USER
-  { path: 'book-form', component: BookFormComponent, canActivate: [AuthGuardService]}, // ADMIN
-  { path: 'book-form/:id', component: BookFormComponent, canActivate: [AuthGuardService]}, // ADMIN
+  { path: 'book-form', component: BookFormComponent, canActivate: [AdminGuardService]}, // ADMIN
+  { path: 'book-form/:id', component: BookFormComponent, canActivate: [AdminGuardService]}, // ADMIN
   { path: 'my-books/:id', component: BorrowedBooksComponent, canActivate: [AuthGuardService]}, // USER
-  // + borrow and return action must be for logged user
+
 ];
 
 @NgModule({
