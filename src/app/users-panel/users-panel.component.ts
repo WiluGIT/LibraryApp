@@ -4,6 +4,7 @@ import { IUserViewModel } from '../ClientViewModels/IUserVIewModel';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-users-panel',
@@ -22,7 +23,7 @@ export class UsersPanelComponent implements OnInit {
   userFilterForm: FormGroup;
 
  
-  constructor(private userService: UsersService, private fb: FormBuilder) {
+  constructor(private userService: UsersService, private fb: FormBuilder, public snackBar:MatSnackBar) {
   }
 
   ngOnInit() {
@@ -61,14 +62,27 @@ export class UsersPanelComponent implements OnInit {
 
   deleteUser(userId){
     this.userService.deleteUser(userId)
-    .subscribe(data => console.log(data));
+    .subscribe(data => {
+      if(data['status']===1){
+        this.openSnackBar(data["message"], 'Close', 'red-snackbar')
+      }else{
+        this.openSnackBar('User deleted successfully', 'Close', 'green-snackbar')
+        var filteredList: IUserViewModel[] = this.users.filter(user => user.userId !== userId);
+        this.users = filteredList;
+        this.usersCount = this.users.length;
+    
+        this.dataSource = new MatTableDataSource(this.users.slice(0,this.pageSize));
+      }
+    });
 
-    var filteredList: IUserViewModel[] = this.users.filter(user => user.userId !== userId);
-    this.users = filteredList;
-    this.usersCount = this.users.length;
 
-    this.dataSource = new MatTableDataSource(this.users.slice(0,this.pageSize));
 
+  }
+  openSnackBar(message: string, action: string, className: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+      panelClass: [className]
+    });
   }
 
   applyFilters() {
