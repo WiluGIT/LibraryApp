@@ -83,14 +83,19 @@ export class BooksComponent implements OnInit {
     console.log(bookId)
     this.bookService.deleteBook(bookId)
       .subscribe(data => {
-        console.log(data);
+        if(data['status']===1){
+          this.openSnackBar(data["message"], 'Close', 'red-snackbar')
+        }else{
+          this.openSnackBar('Book deleted successfully', 'Close', 'green-snackbar')
+          var filteredList: IBookAuthorViewModel[] = this.books.filter(book => book.book.bookId !== bookId);
+          this.books = filteredList;
+          this.bookCount = this.books.length;
+      
+          this.dataSource = new MatTableDataSource(this.books.slice(0, this.pageSize));
+        }
       });
 
-    var filteredList: IBookAuthorViewModel[] = this.books.filter(book => book.book.bookId !== bookId);
-    this.books = filteredList;
-    this.bookCount = this.books.length;
 
-    this.dataSource = new MatTableDataSource(this.books.slice(0, this.pageSize));
 
   }
 

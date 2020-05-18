@@ -9,6 +9,7 @@ import { BookService } from '../services/book.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IBookAuthorViewModel } from '../ClientViewModels/IBookAuthorViewModel';
 import { ThrowStmt } from '@angular/compiler';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-book-form',
@@ -20,7 +21,13 @@ export class BookFormComponent implements OnInit {
   bookId: number;
   book: IBookAuthorViewModel;
   authorList: IAuthorViewModel[];
-  constructor(private fb: FormBuilder, private authorService: AuthorService, private bookService: BookService, private route: ActivatedRoute, private router: Router) {
+  actionText:string = "Create";
+  constructor(private fb: FormBuilder, 
+    private authorService: AuthorService, 
+    private bookService: BookService, 
+    private route: ActivatedRoute, 
+    private router: Router,
+    public snackBar: MatSnackBar) {
     route.params.subscribe(p => {
       //+before p converts id to a number
       this.bookId = +p['id'] || null;
@@ -37,7 +44,9 @@ export class BookFormComponent implements OnInit {
         Validators.required
       ]],
       totalCount: ['', [
-        Validators.required
+        Validators.required,
+
+
       ]],
       authors: ['', [
         Validators.required
@@ -48,6 +57,7 @@ export class BookFormComponent implements OnInit {
       .subscribe(data => this.authorList = data);
 
     if (this.bookId) {
+      this.actionText = "Update"
       this.bookService.getBook(this.bookId)
         .subscribe(data => {
           this.book = {
@@ -91,6 +101,13 @@ export class BookFormComponent implements OnInit {
     return this.bookForm.get('totalCount');
   }
 
+  openSnackBar(message: string, action: string, className: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+      panelClass: [className]
+    });
+  }
+
   addBook() {
     // convert categories, vods dropdownlist value to proper object and set to form value
     const authList = this.bookForm.controls.authors.value.map(el => {
@@ -122,6 +139,11 @@ export class BookFormComponent implements OnInit {
             this.bookService.addAuthorToBook(el.authorId, data["id"])
             .subscribe(data => this.book.authors = authList)
           });
+          if(data['status']===1){
+            this.openSnackBar(data["message"], 'Close', 'red-snackbar')
+          }else{
+            this.openSnackBar('Book updated', 'Close', 'green-snackbar')
+          }
 
         });
     }
@@ -130,7 +152,13 @@ export class BookFormComponent implements OnInit {
       this.bookService.createBook(book).subscribe(data => {
         authList.map(el => {
           this.bookService.addAuthorToBook(el.authorId, data["id"])
-            .subscribe(data => console.log(data))
+            .subscribe(data => {
+              if(data['status']===1){
+                this.openSnackBar(data["message"], 'Close', 'red-snackbar')
+              }else{
+                this.openSnackBar('Book created', 'Close', 'green-snackbar')
+              }
+            })
         });
       });
     }
