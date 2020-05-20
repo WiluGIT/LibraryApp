@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormControl, FormGroupDirective, Ng
 import { AuthService } from '../services/auth.service';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-register',
@@ -11,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
-  constructor(private fb: FormBuilder, private authService:AuthService, private router:Router) { }
+  constructor(private fb: FormBuilder, private authService:AuthService, private router:Router, public snackBar:MatSnackBar) { }
   matcher = new MyErrorStateMatcher();
 
   ngOnInit() {
@@ -47,7 +48,11 @@ export class RegisterComponent implements OnInit {
   register(){
     console.log(this.registerForm.value);
     this.authService.register(this.registerForm.value)
-    .subscribe(data => console.log(data));
+    .subscribe(data => {
+      this.openSnackBar('User Created!', 'Close', 'green-snackbar')
+    }, error =>{
+      this.openSnackBar(error.error["error_description"], 'Close', 'red-snackbar')
+    });
 
     this.router.navigate([""]);
   }
@@ -57,6 +62,13 @@ export class RegisterComponent implements OnInit {
     let confirmPassword = group.get('confirmPassword').value;
 
     return password === confirmPassword ? null : {notSame: true};
+  }
+
+  openSnackBar(message: string, action: string, className: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+      panelClass: [className]
+    });
   }
 
 }

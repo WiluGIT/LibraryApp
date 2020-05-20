@@ -53,3 +53,7 @@ td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
     float: right;
   }
  
+  .authorParagraph{
+    letter-spacing: 1px;
+    padding: 0.1rem;
+  }
