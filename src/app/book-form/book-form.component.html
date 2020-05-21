@@ -10,8 +10,6 @@
                 </div>
             </div>
             <form [formGroup]="bookForm" (ngSubmit)="addBook()">
-                Value: {{bookForm.value | json}}
-                <hr />
                 <mat-form-field appearance="fill">
                     <mat-label>Enter book title</mat-label>
                     <input matInput placeholder="Ex. The Lord of the Rings" formControlName="title">

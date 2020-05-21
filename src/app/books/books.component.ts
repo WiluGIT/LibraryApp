@@ -80,7 +80,6 @@ export class BooksComponent implements OnInit {
 
 
   deleteBook(bookId) {
-    console.log(bookId)
     this.bookService.deleteBook(bookId)
       .subscribe(data => {
         if(data['status']===1){

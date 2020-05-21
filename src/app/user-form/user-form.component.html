@@ -10,8 +10,6 @@
                 </div>
             </div>
             <form [formGroup]="userForm" (ngSubmit)="addUser()">
-                Value: {{userForm.value | json}}
-                <hr />
                 <mat-form-field appearance="fill">
                     <mat-label>Enter username</mat-label>
                     <input matInput placeholder="UserName23" formControlName="userName">

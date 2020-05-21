@@ -46,7 +46,6 @@ export class UserFormComponent implements OnInit {
   }
 
   addUser(){
-    console.log(this.userForm.value);
     this.authService.register(this.userForm.value)
     .subscribe(data => {
       if(data['status']===1){

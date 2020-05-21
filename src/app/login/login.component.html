@@ -7,8 +7,7 @@
               </div>
           </div>
           <form [formGroup]="loginForm" (ngSubmit)="login()">
-              Value: {{loginForm.value | json}}
-              <hr />
+
               <mat-form-field appearance="fill">
                   <mat-label>Enter Login</mat-label>
                   <input matInput placeholder="ExampleUsername" formControlName="userName">
@@ -25,8 +24,8 @@
                       class="btn btn-outline-primary">Login</button>
               </div>
           </form>
-          <div>
-            <button class="" (click)="signInWithGoogle()">dsadsad</button>
+          <div class="google-wrapper">
+            <button class="btn btn-outline-danger" (click)="signInWithGoogle()"><span><fa-icon [icon]="gmailIcon"></fa-icon></span></button>
           </div>
       </div>
   </div>

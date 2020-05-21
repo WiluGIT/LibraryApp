@@ -79,7 +79,6 @@ export class BookFormComponent implements OnInit {
 
           // populate dropdown
           const selectedAuthors = this.book.authors.map(aut => aut.firstName);
-          console.log(selectedAuthors)
           this.bookForm.controls.authors.setValue(selectedAuthors);
 
 
@@ -113,7 +112,6 @@ export class BookFormComponent implements OnInit {
     const authList = this.bookForm.controls.authors.value.map(el => {
       return this.authorList.find(x => x.firstName === el)
     });
-    console.log(authList)
     this.bookForm.controls.authors.setValue(authList);
 
     const book: IBookViewModel = {
@@ -128,7 +126,7 @@ export class BookFormComponent implements OnInit {
       this.book.authors.map(el => {
 
         this.bookService.deleteAuthorFromBook(el.authorId, this.bookId)
-          .subscribe(data => console.log("deleted", data))
+          .subscribe(data => {});
   
       });
       // update book and authors

@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService as socialAuthService } from 'angularx-social-login';
 import { SocialUser } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
+import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -14,7 +15,7 @@ import { GoogleLoginProvider } from 'angularx-social-login';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   userId: string;
-
+  gmailIcon = faGoogle;
 
   constructor(private fb: FormBuilder, 
     private authService: AuthService, 
@@ -71,7 +72,6 @@ export class LoginComponent implements OnInit {
             .subscribe(data => {
               this.authService.getUserRole(data["sub"])
                 .subscribe(role => {
-                  console.log(role)
                   this.authService.saveRole(role["message"]);
                 });
             })
