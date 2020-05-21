@@ -88,9 +88,9 @@
         <mat-cell class="duration-cell" *matCellDef="let element">{{element.book.availableCount}}</mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="authors">
+    <ng-container  matColumnDef="authors">
         <mat-header-cell *matHeaderCellDef>Authors</mat-header-cell>
-        <mat-cell class="duration-cell" *matCellDef="let element">
+        <mat-cell  class="duration-cell  authors-cell-wrapper" *matCellDef="let element">
             <ng-container *ngFor="let author of element.authors">
                 <div class="authorParagraph" >{{" "+ author.firstName.substr(0,1) + ". " + author.lastName + "\n"}}
                 </div>

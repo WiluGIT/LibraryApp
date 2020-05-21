@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService as socialAuthService } from 'angularx-social-login';
 import { SocialUser } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
+import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -14,6 +15,8 @@ import { GoogleLoginProvider } from 'angularx-social-login';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   userId: string;
+  gmailIcon = faGoogle;
+
   constructor(private fb: FormBuilder, 
     private authService: AuthService, 
     private router: Router, 
@@ -31,9 +34,6 @@ export class LoginComponent implements OnInit {
       ]]
     });
 
-    this.socialAuthService.authState.subscribe((user) => {
-      console.log(user);
-    });
   }
 
   get userName() {
@@ -64,8 +64,27 @@ export class LoginComponent implements OnInit {
   }
 
   signInWithGoogle(): void {
-    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(x => console.log(x));
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(x => {
+        this.authService.getIdentityServerToken(x['idToken'])
+        .subscribe(identityToken =>{
+          this.authService.saveToken(identityToken);
+          this.authService.getUserInfo()
+            .subscribe(data => {
+              this.authService.getUserRole(data["sub"])
+                .subscribe(role => {
+                  this.authService.saveRole(role["message"]);
+                });
+            })
+  
+            this.openSnackBar('Logged In!', 'Close', 'green-snackbar')
+            this.router.navigate(["books"]);
+        }, error =>{
+          this.openSnackBar(error.error["error_description"], 'Close', 'red-snackbar')
+        });
+    });
   }
+
+  
 
   openSnackBar(message: string, action: string, className: string) {
     this.snackBar.open(message, action, {

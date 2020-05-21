@@ -11,10 +11,18 @@ export class AuthService {
   private registerPath = environment.apiUrl + 'api/User/AddUser';
   private dataPath = environment.apiUrl + 'connect/userinfo';
   private getUserRolePath = environment.apiUrl + 'api/Role/GetUserRole/';
+  private googleTokenPath = environment.apiUrl + 'api/User/ValidateGoogleUser?tokenId=';
   private options = {
     headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
   };
+  private corsOptions = {
+    headers: new HttpHeaders()
+    .set("Access-Control-Allow-Origin", "*")
+    .set('Access-Control-Allow-Credentials', 'true')
+    .set('Access-Control-Allow-Headers', 'append,delete,entries,foreach,get,has,keys,set,values,Authorization')
+    .set('Access-Control-Allow-Methods', 'GET, PUT, POST, OPTIONS, DELETE')
 
+  }
   constructor(private http:HttpClient) { }
 
   login(data):Observable<any>{
@@ -27,6 +35,10 @@ export class AuthService {
     body.set('password',data.password);
 
     return this.http.post(this.loginPath,body.toString(), this.options);
+  }
+
+  getIdentityServerToken(token:string){
+    return this.http.get(this.googleTokenPath + token,{responseType: 'text'});
   }
 
   logout(){

@@ -8,3 +8,8 @@
 .form-wrapper{
     justify-content: center !important;
 }
+
+.google-wrapper{
+  margin: auto;
+  padding: 20px;
+}

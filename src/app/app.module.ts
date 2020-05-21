@@ -59,6 +59,7 @@ import { BookFormComponent } from './book-form/book-form.component';
 import { BorrowedBooksComponent } from './borrowed-books/borrowed-books.component';
 import { AuthServiceConfig, SocialLoginModule } from "angularx-social-login";
 import { GoogleLoginProvider } from "angularx-social-login";
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 const config = new AuthServiceConfig([
   {
@@ -128,7 +129,8 @@ export function provideConfig() {
     MatToolbarModule,
     MatTooltipModule,
     MatTreeModule,
-    SocialLoginModule
+    SocialLoginModule,
+    FontAwesomeModule
 
   ],
   providers: [AuthService,

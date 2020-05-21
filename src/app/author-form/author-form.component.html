@@ -10,8 +10,6 @@
                 </div>
             </div>
             <form [formGroup]="authorForm" (ngSubmit)="addAuthor()">
-                Value: {{authorForm.value | json}}
-                <hr />
                 <mat-form-field appearance="fill">
                     <mat-label>Enter author name</mat-label>
                     <input matInput placeholder="Stephen" formControlName="firstName">

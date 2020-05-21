@@ -7,8 +7,7 @@
                 </div>
             </div>
             <form [formGroup]="registerForm" (ngSubmit)="register()">
-                Value: {{registerForm.value | json}}
-                <hr />
+    
                 <mat-form-field appearance="fill">
                     <mat-label>Enter username</mat-label>
                     <input matInput placeholder="UserName23" formControlName="userName">
