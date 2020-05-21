@@ -13,7 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 
 export class UsersPanelComponent implements OnInit {
-  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   displayedColumns = ["userId", "userName", "email", "actions"];
   users: IUserViewModel[]; 
   usersCount: number;

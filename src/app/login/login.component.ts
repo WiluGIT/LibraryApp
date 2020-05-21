@@ -3,7 +3,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import { AuthService as socialAuthService } from 'angularx-social-login';
+import { SocialUser } from 'angularx-social-login';
+import { GoogleLoginProvider } from 'angularx-social-login';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -12,7 +14,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   userId: string;
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, public snackBar: MatSnackBar) { }
+  constructor(private fb: FormBuilder, 
+    private authService: AuthService, 
+    private router: Router, 
+    public snackBar: MatSnackBar,
+    private socialAuthService: socialAuthService) { }
 
   ngOnInit() {
     this.loginForm = this.fb.group({
@@ -23,6 +29,10 @@ export class LoginComponent implements OnInit {
         Validators.required
 
       ]]
+    });
+
+    this.socialAuthService.authState.subscribe((user) => {
+      console.log(user);
     });
   }
 
@@ -49,10 +59,12 @@ export class LoginComponent implements OnInit {
           this.router.navigate(["books"]);
       }, error =>{
         this.openSnackBar(error.error["error_description"], 'Close', 'red-snackbar')
-      });
-      
-      
+      });     
 
+  }
+
+  signInWithGoogle(): void {
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(x => console.log(x));
   }
 
   openSnackBar(message: string, action: string, className: string) {

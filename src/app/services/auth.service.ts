@@ -20,7 +20,7 @@ export class AuthService {
   login(data):Observable<any>{
     let body = new URLSearchParams();
     body.set('client_id','LibraryApp');
-    body.set('client_secret','secret');
+    body.set('client_secret','secretsecretsecretsecretsecretsecretsecretsecret');
     body.set('grant_type','password');
     body.set('scope','api1 openid profile email');
     body.set('username',data.userName);
