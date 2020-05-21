@@ -14,6 +14,8 @@ import { GoogleLoginProvider } from 'angularx-social-login';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   userId: string;
+
+
   constructor(private fb: FormBuilder, 
     private authService: AuthService, 
     private router: Router, 
@@ -31,9 +33,6 @@ export class LoginComponent implements OnInit {
       ]]
     });
 
-    this.socialAuthService.authState.subscribe((user) => {
-      console.log(user);
-    });
   }
 
   get userName() {
@@ -64,8 +63,28 @@ export class LoginComponent implements OnInit {
   }
 
   signInWithGoogle(): void {
-    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(x => console.log(x));
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(x => {
+        this.authService.getIdentityServerToken(x['idToken'])
+        .subscribe(identityToken =>{
+          this.authService.saveToken(identityToken);
+          this.authService.getUserInfo()
+            .subscribe(data => {
+              this.authService.getUserRole(data["sub"])
+                .subscribe(role => {
+                  console.log(role)
+                  this.authService.saveRole(role["message"]);
+                });
+            })
+  
+            this.openSnackBar('Logged In!', 'Close', 'green-snackbar')
+            this.router.navigate(["books"]);
+        }, error =>{
+          this.openSnackBar(error.error["error_description"], 'Close', 'red-snackbar')
+        });
+    });
   }
+
+  
 
   openSnackBar(message: string, action: string, className: string) {
     this.snackBar.open(message, action, {
